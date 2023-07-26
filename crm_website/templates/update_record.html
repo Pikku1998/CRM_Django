@@ -3,9 +3,9 @@
 {% block content %}
 {% if user.is_authenticated %}
     
-    <h1>Add a new Customer</h1>
+    <h1>Update customer record</h1>
     <br>
-    <form action="{% url 'add_record' %}" method="post">
+    <form action="{% url 'update_record' record.id %}" method="post">
         {% csrf_token %}
 
         {% if form.errors %}
@@ -22,11 +22,9 @@
         
         {{ form.as_p }}
 
-        <button type="submit" class="btn btn-success">Add record</button>
+        <button type="submit" class="btn btn-success">Update record</button>
         <a href="{% url 'home'%}" class="btn btn-secondary">Back</a>
-
     </form>
-
 
 {% endif %}
 {% endblock content %}

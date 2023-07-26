@@ -99,6 +99,24 @@ def delete_record(request, pk):
         messages.success(request, 'Record has been deleted.')
         return redirect('home')
 
+def update_record(request, pk):
+    if request.user.is_authenticated:
+        update_record = Record.objects.get(pk=pk)
+        
+        if request.method == "POST":
+            form = AddRecordForm(request.POST, instance=update_record)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Record has been updated.')
+                return redirect('home')
+            else:
+                form = AddRecordForm(request.POST)
+                return render(request, 'update_record.html', {'form':form, 'record':update_record})
+
+        form = AddRecordForm(instance=update_record)
+        return render(request, 'update_record.html', {'form':form, 'record':update_record})
+
+
 
 
 
