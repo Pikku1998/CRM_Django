@@ -80,12 +80,27 @@ def view_record(request, pk):
     return redirect('home')
 
 def add_record(request):
-    if request.method == "POST":
-        form = AddRecordForm(request.POST)
-        if form.is_valid():
-            form.save()
-    form = AddRecordForm()
-    return render(request, 'add_record.html', {'form': form})
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = AddRecordForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Record has been added..")
+                return redirect('home')
+            return render(request, 'add_record.html', {'form': form})
+        else:
+            form = AddRecordForm()
+            return render(request, 'add_record.html', {'form': form})
+
+def delete_record(request, pk):
+    if request.user.is_authenticated:       
+        delete_record = Record.objects.get(pk=pk)
+        delete_record.delete()
+        messages.success(request, 'Record has been deleted.')
+        return redirect('home')
+
+
+
 
     
 

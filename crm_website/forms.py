@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Record
 
 class RegisterForm(UserCreationForm):
     first_name = forms.CharField(max_length=50,required=True,label="",widget=forms.TextInput(attrs={'class':'form-control','placeholder':'First name'}))
@@ -28,3 +29,17 @@ class RegisterForm(UserCreationForm):
             self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
             self.fields['password2'].label = ''
             self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
+
+class AddRecordForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=50,required=True,label="",widget=forms.TextInput(attrs={'class':'form-control','placeholder':'First name'}))
+    last_name = forms.CharField(max_length=50,required=True,label="",widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Last name'}))
+    email = forms.EmailField(required=True,label="",widget=forms.EmailInput(attrs={'class':'form-control','placeholder':'Email'}))
+    phone = forms.CharField(max_length=50,required=True,label="",widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Phone number'}))
+    address = forms.CharField(max_length=50,required=True,label="",widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Address'}))
+    city = forms.CharField(max_length=50,required=True,label="",widget=forms.TextInput(attrs={'class':'form-control','placeholder':'City'}))
+    pincode = forms.CharField(max_length=50,required=True,label="",widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Pin Code'}))
+
+    
+    class Meta:
+        model = Record
+        fields = ('__all__')
